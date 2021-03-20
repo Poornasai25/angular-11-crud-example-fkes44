@@ -27,21 +27,17 @@ export class AddEditComponent implements OnInit {
         this.isAddMode = !this.id;
         
         // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
-        if (this.isAddMode) {
-            passwordValidators.push(Validators.required);
-        }
+        
+       
 
-        const formOptions: AbstractControlOptions = { validators: MustMatch('password', 'confirmPassword') };
+        
         this.form = this.formBuilder.group({
             title: ['', Validators.required],
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             role: ['', Validators.required],
-            password: ['', [Validators.minLength(6), this.isAddMode ? Validators.required : Validators.nullValidator]],
-            confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator]
-        }, formOptions);
+        });
 
         if (!this.isAddMode) {
             this.userService.getById(this.id)
